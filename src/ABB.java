@@ -105,11 +105,12 @@ public class ABB<K, V> implements IMapeamento<K, V>{
      */
 	public V pesquisar(K chave) {	
         comparacoes = 0;
-        LocalDateTime inicio = LocalDateTime.now();
-        V item = pesquisar(raiz, chave);
-        LocalDateTime fim = LocalDateTime.now();
-        tempo = Duration.between(inicio, fim).toNanos();
-    	return item; 
+        long inicio = System.nanoTime();
+        try {
+            return pesquisar(raiz, chave);
+        } finally {
+            tempo = System.nanoTime() - inicio;
+        }
     }
     
     private V pesquisar(No<K, V> raizArvore, K procurado) {
